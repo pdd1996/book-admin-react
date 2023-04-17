@@ -1,0 +1,15 @@
+.header {
+    background-color: #fff;
+}
+
+.logo {
+    font-size: 24px;
+    color: burlywood;
+    font-weight: bold;
+}
+
+.logo img {
+    display: inline-block;
+    margin-right: 8px;
+    margin-top: -2px;
+}
