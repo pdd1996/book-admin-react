@@ -1,3 +1,8 @@
 .btn {
     background-color: #1677ff;
 }
+
+.tableWrap {
+    overflow: auto;
+    height: calc(100%  -  80px);
+}

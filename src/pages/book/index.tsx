@@ -1,6 +1,7 @@
-import { Button, Col, Form, Input, Row, Select, Space, Table } from "antd";
-import styles from './index.module.css';
+import { Button, Col, Form, Input, Row, Select, Space, Table, TablePaginationConfig } from "antd";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import styles from './index.module.css';
 
 const dataSource = [
   {
@@ -224,11 +225,16 @@ const COLUMNS = [
   },
 ];
 
-
-
 export default function Home() {
   const [form] = Form.useForm();
   const router = useRouter();
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 20,
+    showSizeChanger: true,
+    total: 0
+  })
+  const [total, setTotal] = useState(0)
 
   const handleSearchFinish = (values) => {
     console.log(values);
@@ -242,6 +248,10 @@ export default function Home() {
   }
   const handleBookEdit = () => {
     router.push('/book/edit/id')
+  }
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    console.log(pagination)
+    setPagination(pagination)
   }
 
   const columns = [...COLUMNS,
@@ -258,7 +268,7 @@ export default function Home() {
       }
     }
   ]
-  
+
   return (
     <>
       <Form
@@ -311,7 +321,15 @@ export default function Home() {
           </Col>
         </Row>
       </Form>
-      <Table dataSource={dataSource} columns={columns} scroll={{x: 1200, y: 290}}/>;
+      <div className={styles.tableWrap}>
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          scroll={{ x: 1000 }}
+          onChange={handleTableChange}
+          pagination={{ ...pagination, showTotal: () => `共 ${pagination.total} 条` }}
+        />
+      </div>
     </>
   )
 }
