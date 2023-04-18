@@ -1,11 +1,9 @@
-import { Breadcrumb, Layout as AntdLayout, Menu, MenuProps, Dropdown, Space } from 'antd';
+import React, { ReactNode } from 'react';
+import { Layout as AntdLayout, Menu, MenuProps, Dropdown, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import React from 'react';
 import Image from 'next/image'
 import styles from './index.module.css';
-
-
 
 const { Header, Content, Sider } = AntdLayout;
 
@@ -16,7 +14,7 @@ const ITEMS = [
 
     children: [
       { label: "图书列表", key: "/book" },
-      { label: "图书添加", key: "/book/add" }, 
+      { label: "图书添加", key: "/book/add" },
     ]
   },
   {
@@ -25,7 +23,7 @@ const ITEMS = [
 
     children: [
       { label: "借阅列表", key: "/borrow" },
-      { label: "借阅添加", key: "/borrow/add" }, 
+      { label: "借阅添加", key: "/borrow/add" },
     ]
   },
   {
@@ -34,7 +32,7 @@ const ITEMS = [
 
     children: [
       { label: "分类列表", key: "/category" },
-      { label: "分类添加", key: "/category/add" }, 
+      { label: "分类添加", key: "/category/add" },
     ]
   },
   {
@@ -43,7 +41,7 @@ const ITEMS = [
 
     children: [
       { label: "用户列表", key: "/user" },
-      { label: "用户添加", key: "/user/add" }, 
+      { label: "用户添加", key: "/user/add" },
     ]
   }
 ];
@@ -59,7 +57,7 @@ const USER_ITEMS = [
   },
 ];
 
-export function Layout({ children }) {
+export function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
@@ -75,17 +73,17 @@ export function Layout({ children }) {
           <span className={styles.user}>
             <Dropdown menu={{ items: USER_ITEMS }}>
               <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    用户名
-                    <DownOutlined />
-                  </Space>
+                <Space>
+                  用户名
+                  <DownOutlined />
+                </Space>
               </a>
             </Dropdown>
           </span>
-      
+
         </div>
       </Header>
-      <AntdLayout>
+      <AntdLayout className={styles.sectionSider}>
         <Sider width={200}>
           <Menu
             mode="inline"
@@ -96,21 +94,11 @@ export function Layout({ children }) {
             onClick={handleMenuClick}
           />
         </Sider>
-        <AntdLayout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            Content
-            {children}
+        <AntdLayout className={styles.sectionContent}>
+          <Content className={styles.content}>
+            <main>
+              {children}
+            </main>
           </Content>
         </AntdLayout>
       </AntdLayout>
